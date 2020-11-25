@@ -42,8 +42,10 @@ class BST{
 
     balanceFactor(root){
         if(root === null) return 0;
-        let l = (root.lchild === null) ? 0 : root.lchild.height;
-        let r = (root.rchild === null) ? 0 : root.rchild.height;
+
+        let l = (root.lchild === null) ? 0 : root.lchild.height+1;
+        let r = (root.rchild === null) ? 0 : root.rchild.height+1;
+        
         return l-r;
     }
 
@@ -103,6 +105,7 @@ class BST{
         if(root === null){
             return node;
         }
+      
         if(node.data < root.data){
             root.lchild = this.insertNode(root.lchild, node);
         }else if(node.data > root.data){
@@ -110,12 +113,13 @@ class BST{
         }else{
             return root;
         }
-
+        
         root.height = max(this.height(root.lchild), this.height(root.rchild)) + 1;
-
+        // console.log("bal factor: ", root.data, this.balanceFactor(root));
         if(this.balanceFactor(root) == 2){
             if(this.balanceFactor(root.lchild) == 1){
                 // LL rotation
+         
                 root = this.LLRotation(root);
             }else if(this.balanceFactor(root.lchild) == -1){
                 // LR Rotation
